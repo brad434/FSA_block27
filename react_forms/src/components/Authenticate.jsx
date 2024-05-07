@@ -3,16 +3,25 @@ import React, { useState } from 'react'
 const Authenticate = ({ token }) => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [username, setUsername] = useState('')
 
   async function handleClick() {
-    console.log('handleclick works!')
+
     try {
+      console.log("Making API call with token:", token)
       const response = await fetch("https://fsa-jwt-practice.herokuapp.com/authenticate", {
         method: 'GET',
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, },
       })
-      const data = response.json();
-      console.log(data)
+      console.log("API response:", data)
+      const data = await response.json();
+
+      console.log("API message:", data.message)
+      setSuccessMessage(data.message);
+
+      console.log("Username set to:", data.username)
+      setUsername(data.username)
+
     } catch (error) {
       setError(error.message)
     }
@@ -21,9 +30,10 @@ const Authenticate = ({ token }) => {
     <>
       <h2>Authenticate</h2>
       {successMessage && <p>{successMessage}</p>}
+      {username && <p>{username}</p>}
       {error && <p>{error}</p>}
 
-      <button onClick={handleClick}>Authenticate Token</button >
+      <button onClick={handleClick}>Authenticate Token!</button >
     </>
   )
 }

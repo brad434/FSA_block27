@@ -18,7 +18,8 @@ const SignUpForm = ({ setToken }) => {
       });
       const data = await response.json();
       setToken(data.token)
-      console.log(data.token);
+      console.log('this is the object:', data);
+      console.log("This is the Token from the data:", data.token);
     } catch (error) {
       setError(error.message);
     }
