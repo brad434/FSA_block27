@@ -9,7 +9,9 @@ function App() {
   return (
     <>
       <SignUpForm token={token} setToken={setToken} />
+      {/* Below is used for if there is a token available it will run the Authenticate code */}
       <Authenticate token={token} setToken={setToken} />
+      {/* {token && <Authenticate token={token} username={token.username} />} */}
     </>
   )
 }

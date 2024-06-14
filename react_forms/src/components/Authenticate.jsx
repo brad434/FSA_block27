@@ -8,19 +8,20 @@ const Authenticate = ({ token }) => {
   async function handleClick() {
 
     try {
-      console.log("Making API call with token:", token)
+      // console.log("Making API call with token:", token)
       const response = await fetch("https://fsa-jwt-practice.herokuapp.com/authenticate", {
         method: 'GET',
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, },
       })
-      console.log("API response:", data)
+
       const data = await response.json();
+      console.log("API response:", data)
 
       console.log("API message:", data.message)
       setSuccessMessage(data.message);
 
-      console.log("Username set to:", data.username)
-      setUsername(data.username)
+      console.log("Username set to:", data.data.username)
+      setUsername(data.data.username)
 
     } catch (error) {
       setError(error.message)
@@ -29,11 +30,10 @@ const Authenticate = ({ token }) => {
   return (
     <>
       <h2>Authenticate</h2>
-      {successMessage && <p>{successMessage}</p>}
-      {username && <p>{username}</p>}
+      {successMessage && username && <p>{successMessage}, {username}</p>}
       {error && <p>{error}</p>}
 
-      <button onClick={handleClick}>Authenticate Token!</button >
+      <button onClick={handleClick}>Authenticate Token!</button>
     </>
   )
 }
